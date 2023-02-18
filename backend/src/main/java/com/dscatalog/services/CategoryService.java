@@ -8,6 +8,8 @@ import com.dscatalog.dto.CategoryDTO;
 import com.dscatalog.entities.Category;
 import com.dscatalog.repositories.CategoryRepository;
 
+import jakarta.persistence.EntityNotFoundException;
+
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -30,7 +32,7 @@ public class CategoryService {
 	public CategoryDTO findById(Long id)
 	{
 		Optional<Category> obj = categoryRepository.findById(id);
-		Category entity = obj.get();
+		Category entity = obj.orElseThrow(()->new EntityNotFoundException("Entity not found!"));
 		return new CategoryDTO(entity);
 	}
 	
